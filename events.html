@@ -394,6 +394,9 @@
       <li class="eh-nav-item">
         <a href="1.html" class="nav-link btn-primary">Edit Profile</a>
       </li>
+       <li class="eh-nav-item">
+        <a href="Login.html" class="eh-nav-link">Login</a>
+      </li>
     </ul>
     <div class="eh-hamburger">
       <span class="eh-bar"></span>
@@ -1160,7 +1163,7 @@ async function showEventModal(event) {
     try {
       await getMyProfile();
     } catch (error) {
-      showToast('Please verify your profile before registration', 'warning');
+      showToast('Please Login before registration', 'warning');
     }
   }
 
