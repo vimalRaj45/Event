@@ -576,10 +576,13 @@
   </div>
 </footer>
 
-<!-- Toast area (bottom-right) -->
+
+<center>
+  <!-- Toast area (bottom-right) -->
 <div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
   <div class="toast-container" id="toastPlacement"></div>
 </div>
+</center>
 
 
 
@@ -761,7 +764,7 @@ async function getMyProfile() {
     
     return result;
   } catch (error) {
-    showToast('Please login to make Participate.');
+    
     throw error;
   }
 }
@@ -1558,19 +1561,6 @@ document.querySelectorAll('.eh-nav-link').forEach(n =>
 
   window.addEventListener('DOMContentLoaded', getMyProfile);
     // Disable right-click context menu
-document.addEventListener('contextmenu', e => e.preventDefault());
-
-// Disable specific key shortcuts
-document.addEventListener('keydown', function(e) {
-  if (
-    e.key === 'F12' ||
-    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
-    (e.ctrlKey && ['U', 'S', 'P'].includes(e.key.toUpperCase()))
-  ) {
-    e.preventDefault();
-   
-  }
-});
 
   </script>
 </body>
