@@ -203,7 +203,7 @@
       try {
         await makeRequest('PUT', `/users/${email}`, data);
         showToast('✔️ Profile updated successfully', 'success');
-        setTimeout(() => window.location.href = 'Home.html', 2100);
+        setTimeout(() => window.location.href = 'index.html', 2100);
       } catch (err) {
         showToast(`❌ Failed to update: ${err.message}`, 'danger');
       }
