@@ -576,6 +576,15 @@
   </div>
 </footer>
 
+<!-- Toast area (bottom-right) -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+  <div class="toast-container" id="toastPlacement"></div>
+</div>
+
+
+
+
+
 <!-- JS Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -652,27 +661,34 @@ const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
 
 const API_BASE_URL = 'https://eventdb.onrender.com/api';
 let currentToken = localStorage.getItem('jwtToken') || '';
-let currentUserProfile = null;
+let currentUserProfile = null;function showToast(message = 'This is a toast message', title = 'Notification') {
+  const toastContainer = document.getElementById('toastPlacement');
 
-// Toast notification system
-function showToast(message, type = 'success') {
   const toast = document.createElement('div');
-  toast.className = `toast align-items-center text-bg-${type} border-0 show`;
+  toast.className = 'toast show mb-2';
   toast.setAttribute('role', 'alert');
   toast.setAttribute('aria-live', 'assertive');
   toast.setAttribute('aria-atomic', 'true');
+
   toast.innerHTML = `
-    <div class="d-flex">
-      <div class="toast-body d-flex align-items-center">
-        <i class="bi ${type === 'success' ? 'bi-check-circle' : type === 'danger' ? 'bi-exclamation-triangle' : 'bi-info-circle'} me-2"></i>
-        ${message}
-      </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    <div class="toast-header">
+      <strong class="me-auto">${title}</strong>
+      <small class="text-muted">Just now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      ${message}
     </div>
   `;
-  document.querySelector('.toast-container').appendChild(toast);
-  setTimeout(() => toast.remove(), 5000);
+
+  toastContainer.appendChild(toast);
+
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    toast.remove();
+  }, 5000);
 }
+
 
 function checkTransactionId() {
   const txnId = document.getElementById('transaction-id').value.trim();
@@ -745,7 +761,7 @@ async function getMyProfile() {
     
     return result;
   } catch (error) {
-    showToast(`Failed to load profile: ${error.message}`, 'danger');
+    showToast('Please login to make Participate.');
     throw error;
   }
 }
@@ -1484,7 +1500,7 @@ async function registerForEvent() {
     eventModal.hide();
     getAllEvents();
   } catch (error) {
-    showToast(`❌ Registration failed: ${error.message}`, 'danger');
+    showToast(`❌ Registration failed: ${error.message}`, 'info');
   } finally {
     registerButton.disabled = false;
     registerButton.innerHTML = `<i class="bi bi-check-circle me-1"></i>Confirm Registration`;
